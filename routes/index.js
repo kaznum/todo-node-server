@@ -4,5 +4,13 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+  var Entry = global.db.Entry;
+  Entry.findAll({order: 'id DESC'})
+    .error(function(err){
+       console.log(err);
+    })
+    .success(function(results){
+      res.render('index', { title: 'Entries' , entries: results});
+    });
 };
+
