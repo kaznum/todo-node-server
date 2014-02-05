@@ -5,7 +5,8 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
+var entry = require('./routes/entry');
+// var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var db = require('./models');
@@ -32,7 +33,10 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+
 app.get('/', routes.index);
+app.post('/entries', entry.create);
+app.delete('/entries/:id', entry.delete);
 
 db.sequelize.sync().complete(function(err) {
   if (err) {
