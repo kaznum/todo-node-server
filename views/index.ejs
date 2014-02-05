@@ -5,7 +5,28 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1>Todo Entries</h1>
+    <form action="/entries" method="POST">
+      <label for="title">Title:</label><input type="text" name="title" id="title">
+      <label for="details">Details:</label><input type="text" name="details" id="details">
+      <input type="submit" value="Send">
+    </form>
+    <br />
+    <% if(entries){ %>
+      <% for(var i=0;i<entries.length;i++){ %>
+       <div class="entry_row">
+         <div class="entry_title"><%= entries[i].title %></div>
+         <div class="entry_details"><%= entries[i].details %></div>
+         <div class="entry_footer">At:<%= entries[i].createdAt %></div>
+         <div class="entry_delete">
+           <form action="/entries/<%= entries[i].id%>" method="POST" id="delete">
+             <input type="hidden" value="DELETE" name="_method">
+             <a href="#" onclick="document.getElementById('delete').submit()">delete</a>
+           </form> 
+         </div>
+       </div> 
+      <% } %>
+    <% } %>
   </body>
 </html>
+
